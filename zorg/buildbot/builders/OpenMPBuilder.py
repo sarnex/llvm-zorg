@@ -74,13 +74,13 @@ def getOpenMPCMakeBuildFactory(
                                haltOnFailure=True,
                                description=["wget l0"],
                                workdir=".",
-                               env=env))
+                               env=merged_env))
         f.addStep(ShellCommand(name="patch-l0",
                                command=['patch','-p1', '-i' ,'l0.patch'],
                                haltOnFailure=True,
                                description=["patch l0"],
                                workdir=".",
-                               env=env))
+                               env=merged_env))
 
     # Configure LLVM and OpenMP (and Clang, if requested).
     cmake_args = ['-DCMAKE_BUILD_TYPE=Release', '-DLLVM_ENABLE_ASSERTIONS=ON']
