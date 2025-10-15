@@ -68,7 +68,14 @@ def getOpenMPCMakeBuildFactory(
                            dir=f.obj_dir,
                            warnOnFailure=True,
                            doStepIf=cleanObjRequested))
-    if patch:    
+    if patch:
+        if clean:
+            f.addStep(ShellCommand(name="clean-repo",
+                                   command=['git reset --hard; git clean -fdx'],
+                                   haltOnFailure=False,
+                                   description=["clean repo for real"],
+                                   workdir=llvm_srcdir,
+                                   env=merged_env))
         f.addStep(ShellCommand(name="wget-l0",
                                command=['wget', 'https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch', '-O', 'l0.patch'],
                                haltOnFailure=True,
