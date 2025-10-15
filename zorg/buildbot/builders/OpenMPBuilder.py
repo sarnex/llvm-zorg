@@ -73,13 +73,13 @@ def getOpenMPCMakeBuildFactory(
                                command=['wget', 'https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch', '-O', 'l0.patch'],
                                haltOnFailure=True,
                                description=["wget l0"],
-                               workdir="./llvm_srcdir",
+                               workdir=llvm_srcdir,
                                env=merged_env))
         f.addStep(ShellCommand(name="patch-l0",
                                command=['patch','-p1', '-i' ,'l0.patch'],
                                haltOnFailure=True,
                                description=["patch l0"],
-                               workdir="./llvm_srcdir",
+                               workdir=llvm_srcdir,
                                env=merged_env))
 
     # Configure LLVM and OpenMP (and Clang, if requested).
