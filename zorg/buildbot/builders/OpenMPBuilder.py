@@ -68,10 +68,15 @@ def getOpenMPCMakeBuildFactory(
                            dir=f.obj_dir,
                            warnOnFailure=True,
                            doStepIf=cleanObjRequested))
-    if patch:
-        cmd=['cd /home/test-user/HERE/openmp-offload-intel-runtime/llvm.src && wget https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch -O l0.patch && patch -p1 < l0.patch']
+    if patch:    
+        f.addStep(ShellCommand(name="wget-l0",
+                               command=['wget', 'https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch', '-O', 'l0.patch'],
+                               haltOnFailure=True,
+                               description=["wget l0"],
+                               workdir=".",
+                               env=env))
         f.addStep(ShellCommand(name="patch-l0",
-                               command=cmd,
+                               command=['patch','-p1', '-i' ,'l0.patch'],
                                haltOnFailure=True,
                                description=["patch l0"],
                                workdir=".",
