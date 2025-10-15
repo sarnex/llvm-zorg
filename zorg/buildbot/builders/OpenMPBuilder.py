@@ -21,6 +21,7 @@ def getOpenMPCMakeBuildFactory(
         extraTestsuiteCmakeArgs = None,
         add_lit_checks      = None,
         add_openmp_lit_args        = None,
+        patch               = False,
         **kwargs):
 
     if extraCmakeArgs is None:
@@ -67,6 +68,14 @@ def getOpenMPCMakeBuildFactory(
                            dir=f.obj_dir,
                            warnOnFailure=True,
                            doStepIf=cleanObjRequested))
+    if patch:
+        cmd=['wget https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch -O l0.patch && patch -p1 < l0.patch']
+        f.addStep(ShellCommand(name="patch-l0",
+                               command=cmd,
+                               haltOnFailure=True,
+                               description=["patch l0"],
+                               workdir=".",
+                               env=env))
 
     # Configure LLVM and OpenMP (and Clang, if requested).
     cmake_args = ['-DCMAKE_BUILD_TYPE=Release', '-DLLVM_ENABLE_ASSERTIONS=ON']

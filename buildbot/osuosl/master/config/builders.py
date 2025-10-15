@@ -2234,7 +2234,29 @@ all += [
                         add_lit_checks=["check-clang", "check-flang", "check-flang-rt", "check-llvm", "check-lld", "check-mlir", "check-offload"],
                         add_openmp_lit_args=["--time-tests", "--timeout 100", "--xfail=affinity/format/proc_bind.c"],
                     )},
-
+# Intel Level Zero builders.
+    {'name' : "openmp-offload-intel-runtime",
+    'tags'  : ["openmp"],
+    'workernames' : ["omp-intel-l0-0"],
+    'builddir': "openmp-offload-intel-runtime",
+    'factory' : OpenMPBuilder.getOpenMPCMakeBuildFactory(
+                        clean=True,
+                        enable_runtimes=['compiler-rt', 'openmp', 'offload'],
+                        depends_on_projects=['llvm','clang','offload', 'openmp', 'compiler-rt'],
+                        extraCmakeArgs=[
+                            "-DCMAKE_BUILD_TYPE=Release",
+                            "-DLLVM_TARGETS_TO_BUILD=X86;SPIRV",
+                            "-DLLVM_ENABLE_ASSERTIONS=ON",
+                            "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
+                            "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+                            ],
+                        install=True,
+                        testsuite=False,
+                        testsuite_sollvevv=False,
+                        add_lit_checks=['check-offload'],
+                        add_openmp_lit_args=["--time-tests", "--timeout 100", "--xfail=affinity/format/proc_bind.c"],
+                        patch=True,
+                    )},
 
 # Whole-toolchain builders.
 
