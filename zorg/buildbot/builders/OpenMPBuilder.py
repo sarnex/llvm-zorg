@@ -70,9 +70,15 @@ def getOpenMPCMakeBuildFactory(
                            doStepIf=cleanObjRequested))
     if patch:
         if clean:
-            f.addStep(ShellCommand(name="clean-repo",
-                                   command=['git reset --hard; git clean -fdx'],
-                                   haltOnFailure=False,
+            f.addStep(ShellCommand(name="clean-repo 1",
+                                   command=['git', 'reset', '--hard'],
+                                   haltOnFailure=True,
+                                   description=["clean repo for real"],
+                                   workdir=llvm_srcdir,
+                                   env=merged_env))
+            f.addStep(ShellCommand(name="clean-repo 2",
+                                   command=['git', 'clean', '-fdx'],
+                                   haltOnFailure=True,
                                    description=["clean repo for real"],
                                    workdir=llvm_srcdir,
                                    env=merged_env))
