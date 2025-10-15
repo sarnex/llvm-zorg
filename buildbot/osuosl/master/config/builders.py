@@ -2249,6 +2249,7 @@ all += [
                             "-DLLVM_ENABLE_ASSERTIONS=ON",
                             "-DCMAKE_C_COMPILER_LAUNCHER=ccache",
                             "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+                            "-DLIBOMPTARGET_PLUGINS_TO_BUILD=level_zero",
                             ],
                         install=True,
                         testsuite=False,
