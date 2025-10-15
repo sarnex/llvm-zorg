@@ -83,7 +83,7 @@ def getOpenMPCMakeBuildFactory(
                                    workdir=llvm_srcdir,
                                    env=merged_env))
         f.addStep(ShellCommand(name="wget-l0",
-                               command=['wget', 'https://patch-diff.githubusercontent.com/raw/llvm/llvm-project/pull/158900.patch', '-O', 'l0.patch'],
+                               command=['wget', 'https://github.com/llvm/llvm-project/compare/main...adurang:l0_tests.diff', '-O', 'l0.patch'],
                                haltOnFailure=True,
                                description=["wget l0"],
                                workdir=llvm_srcdir,
